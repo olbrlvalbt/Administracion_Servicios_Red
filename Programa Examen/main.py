@@ -1,0 +1,3 @@
+import rrdtool
+
+print("Examen")
