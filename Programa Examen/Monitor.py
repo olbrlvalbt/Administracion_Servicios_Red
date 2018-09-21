@@ -1,18 +1,18 @@
+from Procesamiento import Ejecutar
 import os, time
 import threading
 from pysnmp.hlapi import *
 
 class Monitor(threading.Thread):
-    def __init__(self, idAgent, agent):
+    def __init__(self, agent):
         super(Monitor, self).__init__()
-        self.idAgent = idAgent
         self.agent = agent
         self.stopRequest = threading.Event()
 
     def run(self):
         while not self.stopRequest.isSet():
-		var = 1
-            	#self.getAgentInfo()
+	   	Ejecutar( self.agent['comunity'] , self.agent['hostname'] , self.agent['idAgent'] , self.agent['time'] )        
+		#self.getAgentInfo()
 
     def join(self, timeout = None):
         self.stopRequest.set()
@@ -39,4 +39,4 @@ class Monitor(threading.Thread):
             for varBind in varBinds:
                 print(' = '.join([x.prettyPrint() for x in varBind]))
 
-        time.sleep(2)
+	time.sleep(2)
