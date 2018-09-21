@@ -4,6 +4,7 @@ import os.path
 from Procesamiento import crearBases
 from pysnmp.hlapi import *
 from Monitor import Monitor
+from getSNMP import consultaSNMP
 
 class MonitorManager():
 	def __init__(self):
@@ -18,6 +19,19 @@ class MonitorManager():
 				t = Monitor(agent)
 				self.pool.update({agent['idAgent']: t})
 				t.start()
+
+	def consulta( self , idAgent ):
+		for agent in self.data['agents']:
+			if idAgent==agent['idAgent']:
+				print("Informacion del agentes")
+				print( "Nombre del host: " + agent['idAgent'] )
+				print( "IP del host: " + agent['hostname'] )
+				print( "Version: " + agent['version'] )
+				print( "Numero de Interfaces de Red: " + consultaSNMP( agent['comunity'] , agent['hostname'] ,'1.3.6.1.2.1.2.1.0') )
+				print( "Tiempo actividad desde ult reset: " + consultaSNMP( agent['comunity'] , agent['hostname'] ,'1.3.6.1.2.1.1.3.0') )
+				print( "Ubicacion fisica: " + consultaSNMP( agent['comunity'] , agent['hostname'] ,'1.3.6.1.2.1.1.6.0') )
+				print( "Contacto admin: " + consultaSNMP( agent['comunity'] , agent['hostname'] ,'1.3.6.1.2.1.1.4.0') )
+				print
 
 	def addAgent(self, idAgent, hostname, version, port, comunity):
 		if idAgent in self.pool:
