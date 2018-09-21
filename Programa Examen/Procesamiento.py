@@ -72,19 +72,19 @@ def Ejecutar( comunidad , ip , name , times ):
 	#1 Trafico de interfaz
 	total_input_traffic = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.2.2.1.10.1'))
     	total_output_traffic = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.2.2.1.16.1'))
-	print name
+	
     	valor = "N:" + str(total_input_traffic) + ':' + str(total_output_traffic)
-    	rrdtool.update( name + 'Trafico.rrd', valor )
+    	rrdtool.update( str(name) + 'Trafico.rrd', valor )
     	#rrdtool.dump( name + 'Trafico.rrd' , name + 'Trafico.xml' )
 
 	#1 Grafica Trafico de interfaz
 	
-	ret = rrdtool.graph( name + "GraficoTrafico.png",
+	ret = rrdtool.graph( str(name) + "GraficoTrafico.png",
              "--start", str(times) ,
 #                    "--end","N",
              "--vertical-label=Bytes/s",
-             "DEF:inoctets=" + name + "Trafico.rrd:InTraffic:AVERAGE",
-             "DEF:outoctets=" + name + "Trafico.rrd:OutTraffic:AVERAGE",
+             "DEF:inoctets=" + str(name) + "Trafico.rrd:InTraffic:AVERAGE",
+             "DEF:outoctets=" + str(name) + "Trafico.rrd:OutTraffic:AVERAGE",
              "AREA:inoctets#00FF00:In traffic",
              "LINE1:outoctets#0000FF:Out traffic\r")
 	
@@ -97,16 +97,16 @@ def Ejecutar( comunidad , ip , name , times ):
     	total_output_ipv4 = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.4.10.0'))
 
 	valor = "N:" + str(total_input_ipv4) + ':' + str(total_output_ipv4)
-	rrdtool.update( name + 'Estadisticaip.rrd', valor )
+	rrdtool.update( str(name) + 'Estadisticaip.rrd', valor )
     	#rrdtool.dump( name + 'Estadisticaip.rrd' , name + 'Estadisticaip.xml' )
 
 	#2 Grafica Estadisticas IP
-	ret = rrdtool.graph( name + "GraficoEstadisticaip.png",
+	ret = rrdtool.graph( str(name) + "GraficoEstadisticaip.png",
              "--start", str(times) ,
 #                    "--end","N",
              "--vertical-label=Bytes/s",
-             "DEF:inoctets=" + name + "Estadisticaip.rrd:InEstadisticaIP:AVERAGE",
-             "DEF:outoctets=" + name + "Estadisticaip.rrd:OutEstadisticaIP:AVERAGE",
+             "DEF:inoctets=" + str(name) + "Estadisticaip.rrd:InEstadisticaIP:AVERAGE",
+             "DEF:outoctets=" + str(name) + "Estadisticaip.rrd:OutEstadisticaIP:AVERAGE",
              "AREA:inoctets#00FF00:In Estadistica IP",
              "LINE1:outoctets#0000FF:Out Estadistica IP\r")
 
@@ -118,16 +118,16 @@ def Ejecutar( comunidad , ip , name , times ):
     	total_output_icmp = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.5.14.0'))
 
 	valor = "N:" + str(total_input_icmp) + ':' + str(total_output_icmp)
-	rrdtool.update( name + 'Estadisticaicmp.rrd', valor )
+	rrdtool.update( str(name) + 'Estadisticaicmp.rrd', valor )
     	#rrdtool.dump( name + 'Estadisticaicmp.rrd' , name + 'Estadisticaicmp.xml' )
 
 	#3 Grafica Estadisticas ICMP
-	ret = rrdtool.graph( name + "GraficoEstadisticaicmp.png",
+	ret = rrdtool.graph( str(name) + "GraficoEstadisticaicmp.png",
              "--start", str(times) ,
 #                    "--end","N",
              "--vertical-label=Bytes/s",
-             "DEF:inoctets=" + name + "Estadisticaicmp.rrd:InEstadisticaICMP:AVERAGE",
-             "DEF:outoctets=" + name + "Estadisticaicmp.rrd:OutEstadisticaICMP:AVERAGE",
+             "DEF:inoctets=" + str(name) + "Estadisticaicmp.rrd:InEstadisticaICMP:AVERAGE",
+             "DEF:outoctets=" + str(name) + "Estadisticaicmp.rrd:OutEstadisticaICMP:AVERAGE",
              "AREA:inoctets#00FF00:In Estadistica ICMP",
              "LINE1:outoctets#0000FF:Out Estadistica ICMP\r")
 
@@ -139,16 +139,16 @@ def Ejecutar( comunidad , ip , name , times ):
     	total_output_snmp = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.5.14.0'))
 
 	valor = "N:" + str(total_input_snmp) + ':' + str(total_output_snmp)
-	rrdtool.update( name + 'Estadisticasnmp.rrd', valor )
+	rrdtool.update( str(name) + 'Estadisticasnmp.rrd', valor )
     	#rrdtool.dump( name + 'Estadisticasnmp.rrd' , name + 'Estadisticasnmp.xml' )
 
 	#4 Grafica Estadisticas SNMP
-	ret = rrdtool.graph( name + "GraficoEstadisticasnmp.png",
+	ret = rrdtool.graph( str(name) + "GraficoEstadisticasnmp.png",
              "--start", str(times) ,
 #                    "--end","N",
              "--vertical-label=Bytes/s",
-             "DEF:inoctets=" + name + "Estadisticasnmp.rrd:InEstadisticaSNMP:AVERAGE",
-             "DEF:outoctets=" + name + "Estadisticasnmp.rrd:OutEstadisticaSNMP:AVERAGE",
+             "DEF:inoctets=" + str(name) + "Estadisticasnmp.rrd:InEstadisticaSNMP:AVERAGE",
+             "DEF:outoctets=" + str(name) + "Estadisticasnmp.rrd:OutEstadisticaSNMP:AVERAGE",
              "AREA:inoctets#00FF00:In Estadistica SNMP",
              "LINE1:outoctets#0000FF:Out Estadistica SNMP\r")
 
@@ -160,22 +160,20 @@ def Ejecutar( comunidad , ip , name , times ):
     	total_output_tpc = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.6.11.0'))
 
 	valor = "N:" + str(total_input_tpc) + ':' + str(total_output_tpc)
-	rrdtool.update( name + 'Estadisticastpc.rrd', valor )
+	rrdtool.update( str(name) + 'Estadisticastpc.rrd', valor )
     	#rrdtool.dump( name + 'Estadisticastpc.rrd' , name + 'Estadisticastpc.xml' )
 
 	#5 Grafica Estadisticas TCP
-	ret = rrdtool.graph( name + "GraficoEstadisticatcp.png",
+	ret = rrdtool.graph( str(name) + "GraficoEstadisticatcp.png",
              "--start", str(times) ,
 #                    "--end","N",
              "--vertical-label=Bytes/s",
-             "DEF:inoctets=" + name + "Estadisticastpc.rrd:InEstadisticaTCP:AVERAGE",
-             "DEF:outoctets=" + name + "Estadisticastpc.rrd:OutEstadisticaTCP:AVERAGE",
+             "DEF:inoctets=" + str(name) + "Estadisticastpc.rrd:InEstadisticaTCP:AVERAGE",
+             "DEF:outoctets=" + str(name) + "Estadisticastpc.rrd:OutEstadisticaTCP:AVERAGE",
              "AREA:inoctets#00FF00:In Estadistica TCP",
              "LINE1:outoctets#0000FF:Out Estadistica TCP\r")
 
-	
-	time.sleep(20)
-
+	time.sleep(10)
 
 
 
