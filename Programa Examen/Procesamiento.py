@@ -66,12 +66,12 @@ def crearBases( name ):
 
 	
 
-def Ejecutar( comunidad , ip , name , times ):
+def Ejecutar( comunidad , ip , port , name , times ):
 	
-	    
+
 	#1 Trafico de interfaz
-	total_input_traffic = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.2.2.1.10.1'))
-    	total_output_traffic = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.2.2.1.16.1'))
+	total_input_traffic = int(consultaSNMP( comunidad , ip , port , '1.3.6.1.2.1.2.2.1.10.1'))
+    	total_output_traffic = int(consultaSNMP( comunidad , ip , port , '1.3.6.1.2.1.2.2.1.16.1'))
 	
     	valor = "N:" + str(total_input_traffic) + ':' + str(total_output_traffic)
     	rrdtool.update( str(name) + 'Trafico.rrd', valor )
@@ -93,8 +93,8 @@ def Ejecutar( comunidad , ip , name , times ):
 
 
 	#2 Estadisticas IP
-	total_input_ipv4 = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.4.3.0'))
-    	total_output_ipv4 = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.4.10.0'))
+	total_input_ipv4 = int(consultaSNMP( comunidad , ip , port , '1.3.6.1.2.1.4.3.0'))
+    	total_output_ipv4 = int(consultaSNMP( comunidad , ip , port , '1.3.6.1.2.1.4.10.0'))
 
 	valor = "N:" + str(total_input_ipv4) + ':' + str(total_output_ipv4)
 	rrdtool.update( str(name) + 'Estadisticaip.rrd', valor )
@@ -114,8 +114,8 @@ def Ejecutar( comunidad , ip , name , times ):
 
 
 	#3 Estadisticas ICMP
-	total_input_icmp = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.5.1.0'))
-    	total_output_icmp = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.5.14.0'))
+	total_input_icmp = int(consultaSNMP( comunidad , ip , port , '1.3.6.1.2.1.5.1.0'))
+    	total_output_icmp = int(consultaSNMP( comunidad , ip , port , '1.3.6.1.2.1.5.14.0'))
 
 	valor = "N:" + str(total_input_icmp) + ':' + str(total_output_icmp)
 	rrdtool.update( str(name) + 'Estadisticaicmp.rrd', valor )
@@ -135,8 +135,8 @@ def Ejecutar( comunidad , ip , name , times ):
 
 
 	#4 Estadisticas SNMP
-	total_input_snmp = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.5.1.0'))
-    	total_output_snmp = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.5.14.0'))
+	total_input_snmp = int(consultaSNMP( comunidad , ip , port , '1.3.6.1.2.1.5.1.0'))
+    	total_output_snmp = int(consultaSNMP( comunidad , ip , port , '1.3.6.1.2.1.5.14.0'))
 
 	valor = "N:" + str(total_input_snmp) + ':' + str(total_output_snmp)
 	rrdtool.update( str(name) + 'Estadisticasnmp.rrd', valor )
@@ -156,8 +156,8 @@ def Ejecutar( comunidad , ip , name , times ):
 
 
 	#5 Estadisticas TCP
-	total_input_tpc = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.6.10.0'))
-    	total_output_tpc = int(consultaSNMP( comunidad , ip ,'1.3.6.1.2.1.6.11.0'))
+	total_input_tpc = int(consultaSNMP( comunidad , ip , port , '1.3.6.1.2.1.6.10.0'))
+    	total_output_tpc = int(consultaSNMP( comunidad , ip , port , '1.3.6.1.2.1.6.11.0'))
 
 	valor = "N:" + str(total_input_tpc) + ':' + str(total_output_tpc)
 	rrdtool.update( str(name) + 'Estadisticastpc.rrd', valor )

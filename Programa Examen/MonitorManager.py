@@ -20,18 +20,40 @@ class MonitorManager():
 				self.pool.update({agent['idAgent']: t})
 				t.start()
 
+
 	def consulta( self , idAgent ):
+		encontrado = False
 		for agent in self.data['agents']:
 			if idAgent==agent['idAgent']:
 				print("Informacion del agentes")
 				print( "Nombre del host: " + agent['idAgent'] )
 				print( "IP del host: " + agent['hostname'] )
 				print( "Version: " + agent['version'] )
-				print( "Numero de Interfaces de Red: " + consultaSNMP( agent['comunity'] , agent['hostname'] ,'1.3.6.1.2.1.2.1.0') )
-				print( "Tiempo actividad desde ult reset: " + consultaSNMP( agent['comunity'] , agent['hostname'] ,'1.3.6.1.2.1.1.3.0') )
-				print( "Ubicacion fisica: " + consultaSNMP( agent['comunity'] , agent['hostname'] ,'1.3.6.1.2.1.1.6.0') )
-				print( "Contacto admin: " + consultaSNMP( agent['comunity'] , agent['hostname'] ,'1.3.6.1.2.1.1.4.0') )
+				print( "Numero de Interfaces de Red: " + consultaSNMP( agent['comunity'] , agent['hostname'] , agent['port'] , '1.3.6.1.2.1.2.1.0') )
+				print( "Tiempo actividad desde ult reset: " + consultaSNMP( agent['comunity'] , agent['hostname'] , agent['port'] , '1.3.6.1.2.1.1.3.0') )
+				print( "Ubicacion fisica: " + consultaSNMP( agent['comunity'] , agent['hostname'] , agent['port'] , '1.3.6.1.2.1.1.6.0') )
+				print( "Contacto admin: " + consultaSNMP( agent['comunity'] , agent['hostname'] , agent['port'] , '1.3.6.1.2.1.1.4.0') )
 				print
+				encontrado = True
+		return encontrado
+
+
+	def showAll(self):
+		print("Numero de agentes: " + str(len(self.pool)))
+
+		for t in self.pool.values():
+			numInts = int(t.getAgentInfo('1.3.6.1.2.1.2.1.0'))
+			print(" * "  + t.agent['idAgent'] + " : " + str(numInts) + " Interfaces de Red")
+			for i in range(1, numInts + 1):
+				print("\t - Interfaz " + str(i) + " (" + self.getStatus(int(t.getAgentInfo('1.3.6.1.2.1.2.2.1.8.' + str(i)))) + ")")
+
+	def getStatus(self, status):
+		if status == 1:
+			return "up"
+		elif status == 2:
+			return "down"
+		else:
+			return "testing"
 
 	def addAgent(self, idAgent, hostname, version, port, comunity):
 		if idAgent in self.pool:
@@ -59,6 +81,7 @@ class MonitorManager():
 		crearBases( idAgent )		
 
 		return True
+
 
 	def removeAgent(self, idAgent):
 		if not idAgent in self.pool:
