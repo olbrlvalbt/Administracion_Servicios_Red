@@ -12,7 +12,11 @@ class Monitor(threading.Thread):
 
     def run(self):
         while not self.stopRequest.isSet():
-	   	   Ejecutar( self.agent['comunity'] , self.agent['hostname'] , self.agent['port'] , self.agent['idAgent'] , self.agent['time'] )        
+            try:
+                Ejecutar( self.agent['comunity'] , self.agent['hostname'] , self.agent['port'] , self.agent['idAgent'] , self.agent['time'] )        
+            except:
+                time.sleep(10)
+                continue
 
     def join(self, timeout = None):
         self.stopRequest.set()

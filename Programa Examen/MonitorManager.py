@@ -42,10 +42,14 @@ class MonitorManager():
 		print("Numero de agentes: " + str(len(self.pool)))
 
 		for t in self.pool.values():
-			numInts = int(t.getAgentInfo('1.3.6.1.2.1.2.1.0'))
-			print(" * "  + t.agent['idAgent'] + " : " + str(numInts) + " Interfaces de Red")
-			for i in range(1, numInts + 1):
-				print("\t - Interfaz " + str(i) + " (" + self.getStatus(int(t.getAgentInfo('1.3.6.1.2.1.2.2.1.8.' + str(i)))) + ")")
+			try:
+				numInts = int(t.getAgentInfo('1.3.6.1.2.1.2.1.0'))
+				print(" * "  + t.agent['idAgent'] + " : " + str(numInts) + " Interfaces de Red")
+				for i in range(1, numInts + 1):
+					print("\t - Interfaz " + str(i) + " (" + self.getStatus(int(t.getAgentInfo('1.3.6.1.2.1.2.2.1.8.' + str(i)))) + ")")
+			except:
+				print(" * "  + t.agent['idAgent'] + " : Sin acceso a ifNumber.")
+
 
 	def getStatus(self, status):
 		if status == 1:

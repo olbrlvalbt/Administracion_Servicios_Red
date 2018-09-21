@@ -68,7 +68,7 @@ def crearBases( name ):
 
 def Ejecutar( comunidad , ip , port , name , times ):
 	
-
+	    
 	#1 Trafico de interfaz
 	total_input_traffic = int(consultaSNMP( comunidad , ip , port , '1.3.6.1.2.1.2.2.1.10.1'))
     	total_output_traffic = int(consultaSNMP( comunidad , ip , port , '1.3.6.1.2.1.2.2.1.16.1'))
