@@ -1,6 +1,7 @@
 import json
 import threading, time
 import os.path
+from Procesamiento import crearBases
 from pysnmp.hlapi import *
 from Monitor import Monitor
 
@@ -22,12 +23,15 @@ class MonitorManager():
 		if idAgent in self.pool:
 			return False
 
+		tiempo_actual = int(time.time())		
+
 		newAgent = {  
 		    'idAgent': idAgent,
 		    'hostname': hostname,
 		    'version': version,
 		    'port': port,
-		    'comunity': comunity
+		    'comunity': comunity,
+		    'time': tiempo_actual	
 		}
 
 		t = Monitor(newAgent)
@@ -37,6 +41,8 @@ class MonitorManager():
 		self.data['agents'].append(newAgent)
 		with open('agents.json', 'w') as f:
 		    json.dump(self.data, f)
+
+		crearBases( idAgent )		
 
 		return True
 

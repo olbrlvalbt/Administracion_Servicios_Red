@@ -2,6 +2,7 @@ from MonitorManager import MonitorManager
 import rrdtool, time
 
 mm = MonitorManager()
+mm.addAgent( 'local' , 'localhost' , 'v2c' , 161 , 'comunidadASR' )
 
 def main():
 	print("Examen")
@@ -38,4 +39,3 @@ def menu():
 			print("wea4")
 
 main()
-
