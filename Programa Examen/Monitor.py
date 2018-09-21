@@ -11,7 +11,8 @@ class Monitor(threading.Thread):
 
     def run(self):
         while not self.stopRequest.isSet():
-            self.getAgentInfo()
+		var = 1
+            	#self.getAgentInfo()
 
     def join(self, timeout = None):
         self.stopRequest.set()

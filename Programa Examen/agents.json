@@ -1,0 +1,1 @@
+{"agents": [{"version": "v2c", "hostname": "localhost", "idAgent": "local", "comunity": "comunidadASR", "port": 161}, {"comunity": "comunidad", "hostname": "192.168.1.72", "idAgent": "win", "version": "v2c", "port": 161}]}
