@@ -3,9 +3,8 @@ import threading
 from pysnmp.hlapi import *
 
 class Monitor(threading.Thread):
-    def __init__(self, idAgent, agent):
+    def __init__(self, agent):
         super(Monitor, self).__init__()
-        self.idAgent = idAgent
         self.agent = agent
         self.stopRequest = threading.Event()
 

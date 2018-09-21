@@ -8,19 +8,19 @@ class MonitorManager():
 	def __init__(self):
 		self.data = {}
 		self.data['agents'] = [] 
-		self.pool = list()
+		self.pool = {}
 
 		if os.path.exists('agents.json'):
 			with open('agents.json', 'r') as f:
 				self.data = json.load(f)
-				pool = [Monitor(idAgent = agent['idAgent'], agent = agent) for agent in self.data['agents']]
-			for t in pool:
+			for agent in self.data['agents']:
+				t = Monitor(agent)
+				self.pool.update({agent['idAgent']: t})
 				t.start()
 
 	def addAgent(self, idAgent, hostname, version, port, comunity):
-		for agent in self.data['agents']:
-			if agent['idAgent'] == idAgent:
-				return False
+		if idAgent in self.pool:
+			return False
 
 		newAgent = {  
 		    'idAgent': idAgent,
@@ -30,12 +30,24 @@ class MonitorManager():
 		    'comunity': comunity
 		}
 
-		t = Monitor(idAgent = idAgent, agent = newAgent)
-		self.pool.append(t)
+		t = Monitor(newAgent)
+		self.pool.update({idAgent: t})
 		t.start()
 
 		self.data['agents'].append(newAgent)
-		with open('agents.json', 'w') as f:  
+		with open('agents.json', 'w') as f:
 		    json.dump(self.data, f)
 
 		return True
+
+	def removeAgent(self, idAgent):
+		if not idAgent in self.pool:
+			return False
+		else:
+			self.pool[idAgent].join()
+			a = self.pool.pop(idAgent)
+			self.data['agents'].remove(a.agent)
+
+			with open('agents.json', 'w') as f:
+			    json.dump(self.data, f)
+			return True
